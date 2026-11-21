@@ -1,7 +1,7 @@
 import tree_sitter_python as ts_py
 import tree_sitter_javascript as ts_js
 from tree_sitter import Language , Parser
-from pathlib import Path
+from pathlib import Path 
 
 LANGUAGE = {
     "python": Language(ts_py.language()),
@@ -48,7 +48,7 @@ def parse_file(filename):
     tree = parser.parse(source)
     
     return language_name, source, tree 
-
+     
 
 
 def extract_functions(language , source , tree):
@@ -76,9 +76,6 @@ def extract_functions(language , source , tree):
         
         
     return results
-
-
-
 
 
 file_name = "/home/varizz/Nodeglass/backend/parsers/test.py"

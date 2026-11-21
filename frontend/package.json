@@ -1,0 +1,79 @@
+{
+  "name": "nodeglass-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite --host 127.0.0.1\" \"tsc -p electron/tsconfig.json --watch\" \"wait-on http://127.0.0.1:5173 dist-electron/main.js && electron .\"",
+    "typecheck": "tsc --noEmit && tsc -p electron/tsconfig.json --noEmit",
+    "build": "tsc --noEmit && vite build && tsc -p electron/tsconfig.json",
+    "package": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder",
+    "test:e2e": "node tests/desktop.cjs",
+    "dev:web": "vite --host 127.0.0.1"
+  },
+  "dependencies": {
+    "@dagrejs/dagre": "^1.1.5",
+    "@tanstack/react-query": "^5.90.0",
+    "@xyflow/react": "^12.9.0",
+    "lucide-react": "^0.468.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/vite": "^4.1.0",
+    "@types/dagre": "^0.7.53",
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "concurrently": "^9.2.0",
+    "electron": "^45.4.1",
+    "electron-builder": "^26.0.12",
+    "tailwindcss": "^4.1.0",
+    "typescript": "^5.9.0",
+    "vite": "^6.4.0",
+    "wait-on": "^8.0.0"
+  },
+  "build": {
+    "appId": "dev.nodeglass.desktop",
+    "productName": "Nodeglass",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist/nodeglass-backend",
+        "to": "backend"
+      }
+    ],
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Development"
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ]
+    },
+    "electronDist": "node_modules/electron/dist"
+  },
+  "overrides": {
+    "minimatch": "^11.0.1"
+  },
+  "description": "Local code intelligence and static call exploration",
+  "author": "Nodeglass contributors"
+}
